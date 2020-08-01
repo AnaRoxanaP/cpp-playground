@@ -1,0 +1,2 @@
+﻿  05_show_args.cpp
+e:\practicasiemens\c++\teme\tema1\cpp-playground\05_show_args\05_show_args.cpp(4): fatal error C1083: Cannot open precompiled header file: 'Debug\05_show_args.pch': No such file or directory

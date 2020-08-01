@@ -1,0 +1,11 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\01_hello_world",
+    "\\01_hello_world\\src",
+    "\\02_odd_even",
+    "\\02_odd_even\\src"
+  ],
+  "SelectedNode": "\\01_hello_world\\src\\main.cpp",
+  "PreviewInSolutionExplorer": false
+}
