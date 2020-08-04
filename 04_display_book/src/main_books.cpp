@@ -59,7 +59,7 @@ struct Book
 
 void setBookName(Book& book, std::string name)
 {
-	strncpy_s(book.title, name.c_str(), MAX_TITLE_LEN);
+	strncpy(book.title, name.c_str(), MAX_TITLE_LEN);
 }
 
 int main()
@@ -97,7 +97,7 @@ int main()
 
 	book4.id = 4;
 	book4.numAuthors = 0;
-	setBookName(book4, "Clean Architecture");
+	setBookName(book4, "Clean Architecture:A Craftsman's Guide to Software Structure and Design ");
 	author.setName("Robert C. Martin");
 	book4.addAuthor(author);
 
