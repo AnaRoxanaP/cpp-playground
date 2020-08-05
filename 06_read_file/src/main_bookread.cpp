@@ -1,6 +1,9 @@
 ﻿#include <iostream>
 #include <string>
 #include <vector>
+#include <fstream>
+//using namespace std;
+
 
 /**
 	Define a simple book.
@@ -33,16 +36,63 @@ public:
 */
 std::vector<Book> readBooksFromTextFile(const std::string& file_name)
 {
-	std::vector<Book> results;
+	/*std::vector<Book> results(NrBooks);
+	vector<string> text(6);
+	string lineFromFile;
+	int cnt = 0,number=0;
+	ifstream ReadFile(file_name);
+	while (getline(ReadFile, lineFromFile)) {
+		text[cnt] = lineFromFile;
+		cnt++;
+	}
+
+	for (int i = 0; i < cnt; i++) {
+		if (i % 2 == 0) {
+			results[number].name = text[i];
+			i++;
+			results[number].authors = text[i];
+		}
+		
+		number++;
+	}*/
+
 	// TODO: BEGIN read the file -------------------------------------
 
+	std::vector<Book> results;
+	std::vector<std::string> text;
+	std::string lineFromFile;
+	Book book;	
 
-	// E.g. Book myBook;
-	//		...
-	//		results.emplace_back(myBook);
+	std::ifstream ReadFile(file_name);
+
+	if (ReadFile.fail()) {
+		std::cout << "Your file did'n work" << std::endl;		
+	}
+	else
+	{
+
+		while (std::getline(ReadFile, lineFromFile)) {
+			text.emplace_back(lineFromFile);
+		}
+		
+
+		for (int i = 0; i < text.size(); i++) {
+			if (i % 2 == 0) {
+				book.name = text[i];
+				i++;
+				book.authors = text[i];
+			}
+
+			results.emplace_back(book);
+		}
+
+		ReadFile.close();
+	}
+
+	return results;
 
 	// TODO: END read file and add to results vector ------------------
-	return results;
+	
 }
 
 int main()
@@ -62,6 +112,8 @@ int main()
 	{
 		book.print();
 	}
+
+	//std::ifstream ReadFile;
 
 	return 0;
 }
