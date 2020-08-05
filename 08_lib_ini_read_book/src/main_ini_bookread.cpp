@@ -5,6 +5,7 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include <fstream>
 
 // 3rd party libs headers
 #include <SimpleIni.h>
@@ -46,6 +47,63 @@ public:
 std::vector<Book> readBooksFromIniFile(const std::string& file_name)
 {
 	std::vector<Book> results;
+	std::vector<std::string> text;
+	Book book;
+
+	std::string lineFromFile;
+	std::ifstream ReadFile(file_name);
+
+	if (ReadFile.fail()) {
+		std::cout << "Your file did'n work" << std::endl;
+	}
+	else
+	{
+		while (std::getline(ReadFile, lineFromFile)) {
+			if (lineFromFile.length() == 0) {
+				std::getline(ReadFile, lineFromFile);  //remove blank lines
+			}
+			text.emplace_back(lineFromFile);
+		}
+		ReadFile.close();
+
+		for (int i = 0; i < text.size(); i++) {
+			std::string delimiter = "=";
+			text[i].erase(0, text[i].find(delimiter)+delimiter.length());			
+		}
+
+		for (int i = 3; i < text.size(); i++) {
+			
+				book.name = text[i];
+				i++;
+				book.authors = text[i];
+				i++;
+				
+
+			results.emplace_back(book);
+		}
+	}
+
+
+	
+
+	//CSimpleIniA ini;
+	//ini.SetUnicode();
+	//SI_Error rc = ini.LoadFile("../../data/ermahgerd_berks.ini");
+	//CSimpleIniA::TNamesDepend sections;
+	//CSimpleIniA::TNamesDepend keys;
+	//ini.GetAllSections(sections);
+	//ini.GetAllKeys("section1", keys);
+
+	//const char* pv;
+	//pv = ini.GetValue("section", "key");
+	//
+
+
+	//std::cout <<"Ceva" << std::endl;
+	//std::cout << pv << std::endl;
+
+	
+	
 	// TODO: BEGIN read the file -------------------------------------
 	
 	// E.g. Book myBook;
@@ -59,6 +117,9 @@ std::vector<Book> readBooksFromIniFile(const std::string& file_name)
 	//		results.emplace_back(myBook);
 
 	// TODO: END read file and add to results vector ------------------
+
+	
+
 	return results;
 }
 
@@ -68,7 +129,7 @@ int main()
 	// Using the SimpleINI C++ Lib: https://github.com/brofield/simpleini
 
 	// Read the data
-	std::string input_data("PATH_TO_INI_FILE.ini");
+	std::string input_data("../../data/ermahgerd_berks.ini");
 	std::cout << "Reading the data from " << input_data << std::endl;
 	std::vector<Book> books_from_file = readBooksFromIniFile(input_data);
 
