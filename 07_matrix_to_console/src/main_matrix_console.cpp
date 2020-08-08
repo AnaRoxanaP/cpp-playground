@@ -9,20 +9,32 @@ class Matrix
 {
 private:
 	size_t column_count;
-	size_t line_count;
+	size_t line_count;	
+	std::string **data_line;
 
 	// TODO: store the data
 	// hints: you can use std::string, std::vectors + string, char**, vector<vector<char>>, etc
 public:
 	Matrix(size_t numColumnsX, size_t numLinesY)
-		// TODO: add functionality
 	{
 		// TODO: add functionality
+		line_count = numLinesY;
+		column_count = numColumnsX;
+		data_line = new std::string*[line_count];
+		for (int i = 0; i < line_count; i++) {
+			data_line[i] = new std::string[column_count];
+		}
 	}
 
 	// Set an entire line
 	void setLine(size_t line_number, const std::string& data)
 	{
+		std::vector<char> vect_data(data.begin(), data.end());
+		
+		for (int i = 0; i < data.length(); i++) {
+			data_line[line_number][i] = vect_data[i];
+			
+		}
 	}
 
 	//OPTIONAL
@@ -55,12 +67,20 @@ public:
 	void setCellXY(size_t x, size_t y, char cell_content)
 	{
 		// TODO: add functionality
+		data_line[y][x] = cell_content;
 	}
 
 	void print()
 	{
 		// print all lines and columns
 		// TODO: add functionality
+		for (int i = 0; i < line_count; i++) {
+			for (int j = 0; j < column_count; j++) {
+				std::cout << data_line[i][j];
+			}
+			std::cout << std::endl;
+		}
+		std::cout << std::endl;
 	}
 };
 
@@ -96,6 +116,7 @@ X-----X----X-----XX-
 */
 	matrix.setCellXY(2, 1, '-');
 	matrix.print();
+
 	// Would print
 /*
 X-----X----X-----XX-
