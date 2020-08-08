@@ -36,8 +36,6 @@ struct Book
 		// TODO: add an author to the container authors array.
 		authors[numAuthors].setName(author.name);
 		numAuthors++;
-		
-		
 	}
 
 	void print()
@@ -60,6 +58,7 @@ struct Book
 void setBookName(Book& book, std::string name)
 {
 	strncpy(book.title, name.c_str(), MAX_TITLE_LEN);
+	name[name.length()] = 0;
 }
 
 int main()
