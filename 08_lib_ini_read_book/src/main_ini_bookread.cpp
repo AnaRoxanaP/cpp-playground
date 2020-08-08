@@ -25,7 +25,6 @@ public:
 		std::cout << "\t(by " << this->authors << ")" << std::endl;
 	}
 };
-
 /**
 	Reads a vector of books from an INI file.
 	Note: the INI file shall contain a general books section with the number of books contained,
@@ -50,59 +49,60 @@ std::vector<Book> readBooksFromIniFile(const std::string& file_name)
 	std::vector<std::string> text;
 	Book book;
 
-	std::string lineFromFile;
-	std::ifstream ReadFile(file_name);
-
-	if (ReadFile.fail()) {
-		std::cout << "Your file did'n work" << std::endl;
+	CSimpleIniA ini;
+	ini.SetUnicode();
+	SI_Error rc = ini.LoadFile("../../data/ermahgerd_berks.ini");
+	if (rc < 0) {
+		std::cout << "Error" << std::endl;
 	}
-	else
-	{
-		while (std::getline(ReadFile, lineFromFile)) {
-			if (lineFromFile.length() == 0) {
-				std::getline(ReadFile, lineFromFile);  //remove blank lines
-			}
-			text.emplace_back(lineFromFile);
-		}
-		ReadFile.close();
+	std::string count = ini.GetValue("books", "count");
+	std::string new_section;
+	const char *val;
+	int c = stoi(count);
 
-		for (int i = 0; i < text.size(); i++) {
-			std::string delimiter = "=";
-			text[i].erase(0, text[i].find(delimiter)+delimiter.length());			
-		}
 
-		for (int i = 3; i < text.size(); i++) {
-			
-				book.name = text[i];
-				i++;
-				book.authors = text[i];
-				i++;
-				
-
-			results.emplace_back(book);
-		}
+	for (int i = 0; i < c; i++) {
+		std::string section = "book.";
+		new_section = section.append(std::to_string(i + 1));
+		val = new_section.c_str();
+		book.name = ini.GetValue(val, "name");
+		book.authors = ini.GetValue(val, "author");
+		results.emplace_back(book);
 	}
 
+	//std::string lineFromFile;
+	//std::ifstream ReadFile(file_name);
 
-	
+	//if (ReadFile.fail()) {
+	//	std::cout << "Your file did'n work" << std::endl;
+	//}
+	//else
+	//{
+	//	while (std::getline(ReadFile, lineFromFile)) {
+	//		if (lineFromFile.length() == 0) {
+	//			std::getline(ReadFile, lineFromFile);  //remove blank lines
+	//		}
+	//		text.emplace_back(lineFromFile);
+	//	}
+	//	ReadFile.close();
 
-	//CSimpleIniA ini;
-	//ini.SetUnicode();
-	//SI_Error rc = ini.LoadFile("../../data/ermahgerd_berks.ini");
-	//CSimpleIniA::TNamesDepend sections;
-	//CSimpleIniA::TNamesDepend keys;
-	//ini.GetAllSections(sections);
-	//ini.GetAllKeys("section1", keys);
+	//	for (int i = 0; i < text.size(); i++) {
+	//		std::string delimiter = "=";
+	//		text[i].erase(0, text[i].find(delimiter)+delimiter.length());			
+	//	}
 
-	//const char* pv;
-	//pv = ini.GetValue("section", "key");
-	//
+	//	for (int i = 3; i < text.size(); i++) {
+	//		
+	//			book.name = text[i];
+	//			i++;				book.authors = text[i];
+	//			i++;
+	//			
+
+	//		results.emplace_back(book);
+	//	}
+	//}
 
 
-	//std::cout <<"Ceva" << std::endl;
-	//std::cout << pv << std::endl;
-
-	
 	
 	// TODO: BEGIN read the file -------------------------------------
 	
@@ -139,6 +139,6 @@ int main()
 	{
 		book.print();
 	}
-
+	
 	return 0;
 }
