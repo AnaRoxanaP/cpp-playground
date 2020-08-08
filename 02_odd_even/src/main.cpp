@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <string>
+#include <regex>
 
 void printOddOrEven(int number)
 {
@@ -12,6 +13,14 @@ void printOddOrEven(int number)
 	else
 	{
 		printf("ODD\n");
+	}
+}
+
+bool hasSpecialCharacters(std::string str) {
+	for (int i = 0; i < str.length(); i++) {
+		if (str[0] == '-')
+			return true;
+		return false;
 	}
 }
 
@@ -44,20 +53,20 @@ int main(int argc, char *argv[])
 	const char* argumentAsCharArray = argumentAsString.c_str();
 
 
-	if (isdigit(argumentAsString[0])) {
-		int mynr = stoi(argumentAsString);
-		printOddOrEven(mynr);
-	}
-	else {
-		printf("NAN\n");
-	}
+		if (isdigit(argumentAsString[0])||argumentAsString[0]=='-') {
+			int mynr = stoi(argumentAsString);
+			printOddOrEven(mynr);
+		}
+		else {
+			printf("NAN\n");
+		}	
 
 
 	//number = argv[1]; // No
 	//should use atoi?
 	// or std::stoi?
 
-	//std::cout << argumentAsString << std::endl; // i think this should be removed
+	std::cout << argumentAsString << std::endl; // i think this should be removed
 
 	// --------------- stop
 
